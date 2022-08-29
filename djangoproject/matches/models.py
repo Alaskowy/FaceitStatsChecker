@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Match(models.Model):
-    match_id = models.CharField(max_length=255)
+    match_id = models.CharField(max_length=255, unique=True)
     map = models.CharField(max_length=255)
     winner = models.CharField(max_length=255)
     score = models.CharField(max_length=255)
