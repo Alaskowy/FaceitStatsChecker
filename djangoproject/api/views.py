@@ -1,10 +1,12 @@
 import json
+from typing import Union
 from pprint import pprint
 from players.models import Player
 from matches.models import Match
 from matches.team_model import Team
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
+import os
 import requests
 from django.views import View
 from django.http import HttpResponse
@@ -15,7 +17,7 @@ token = os.getenv("TOKEN")
 
 class PlayersAPIView(View):
     def get(self, request):
-        request = requests.get("https://open.faceit.com/data/v4/players", headers={"Authorization": "Bearer 64cad1ea-124c-432e-896d-f9e14e313cb5"},
+        request = requests.get("https://open.faceit.com/data/v4/players", headers={"Authorization": f"Bearer {token}"},
                                params={"nickname": "Alask"})
         result = request.json()
         player_id = result['player_id']
@@ -40,10 +42,11 @@ class PlayersGamesHistory(View):
         match_id = SECOND_MATCH
         players = TeamService.download_teams_with_players(match_id)
         for player in players:
-            info_about_player = get_player_info_based_on_player_id(player)
-            create_player(info_about_player)
-        match = get_match_info_based_on_match_id(match_id)
-        create_match(match)
+            info_about_player = PlayerService.get_player_info_based_on_player_id(player)
+            PlayerService.create_player(info_about_player)
+        match = MatchService.get_match_info_based_on_match_id(match_id)
+        matchstats = MatchService.create_match(match)
+        PlayerService.create_player_stats(match=matchstats, data=match)
 
         return HttpResponse(result)
 

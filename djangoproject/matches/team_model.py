@@ -1,6 +1,9 @@
 from django.db import models
-from players.models import Player
 
 class Team(models.Model):
     team_id = models.CharField(max_length=255)
-    players = models.ManyToManyField(Player, default=None)
+    matches = models.ForeignKey("matches.Match", on_delete=models.CASCADE, null=True)
+    players = models.ManyToManyField("players.Player")
+
+    def __str__(self):
+        return self.team_id

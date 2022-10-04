@@ -1,5 +1,6 @@
 from django.db import models
-# Create your models here.
+
+# Create your models here
 
 class PlayerStats(models.Model):
     match = models.ForeignKey("matches.Match", on_delete=models.CASCADE)
@@ -23,6 +24,8 @@ class Player(models.Model):
     country = models.CharField(max_length=100)
     nickname = models.CharField(max_length=40)
     game_player_id = models.CharField(max_length=255)
+    matches = models.ManyToManyField("matches.Match")
+    stats = models.ManyToManyField(PlayerStats, null=True)
 
     def __str__(self):
         return self.nickname
