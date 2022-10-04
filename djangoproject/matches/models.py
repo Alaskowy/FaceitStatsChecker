@@ -12,9 +12,8 @@ class Match(models.Model):
     team_1 = models.OneToOneField(Team, on_delete=models.CASCADE, related_name="team_1")
     team_2 = models.OneToOneField(Team, on_delete=models.CASCADE, related_name="team_2")
 
+    def __str__(self):
+        return self.match_id
 
-
-class PlayerStats(models.Model):
-    match_id = models.OneToOneField(Match, on_delete=models.CASCADE)
 
 
