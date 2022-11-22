@@ -1,6 +1,7 @@
 import requests
 import os
-from players.models import Player, PlayerStats
+from players.models.player import Player
+from players.models.stats import PlayerStats
 from matches.models import Match
 from typing import Union
 token = os.getenv("TOKEN")

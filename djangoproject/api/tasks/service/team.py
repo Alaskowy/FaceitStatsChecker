@@ -1,7 +1,7 @@
 from players.models import Player
 from matches.models import Match
-from matches.team_model import Team
-from typing import Union
+from matches.models.team import Team
+from typing import Union, Any
 import requests
 import os
 token = os.getenv("TOKEN")
@@ -51,7 +51,7 @@ class TeamService:
         teams = {}
         team_1 = [player['player_id'] for player in data['rounds'][0]['teams'][0]['players']]
         team_2 = [player['player_id'] for player in data['rounds'][0]['teams'][1]['players']]
-        teams.update({'faction1': team_1, 'faction_2': team_2})
+        teams.update({'faction1': team_1, 'faction2': team_2})
         team_1_id = data['rounds'][0]['teams'][0]['team_id']
         team_2_id = data['rounds'][0]['teams'][1]['team_id']
         if len(team_1) + len(team_2) == 10:

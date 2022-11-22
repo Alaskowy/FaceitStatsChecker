@@ -18,8 +18,16 @@ def register(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            messages.success(request, f"Account created - {username}")
+            nickname = form.cleaned_data.get('nickname')
+            if Player.objects.filter(nickname=nickname).exists():
+                messages.error(request, f"Account already exist")
+                return render(request, 'users/register.html', {'form': form})
+            user_data = get_user_data(user_nickname=nickname)
+            if not user_data:
+                messages.error(request, f"Faceit Account with {nickname} does not exist" )
+                return render(request, 'users/register.html', {'form': form})
+            form.save()
+            messages.success(request, f"Account created - {nickname}")
             return redirect('players')
     else:
         form = AccountForm()

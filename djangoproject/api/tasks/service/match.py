@@ -2,6 +2,7 @@ import requests
 import os
 from matches.models import Match
 from .team import TeamService
+from datetime import datetime, timezone
 token = os.getenv("TOKEN")
 
 
@@ -17,7 +18,7 @@ class MatchService:
             return request.json()
 
     @staticmethod
-    def create_match(data: dict) -> Match:
+    def create_match(data: dict, epoch: datetime) -> Match:
         """
         Creating match based on data, and return match object.
         """

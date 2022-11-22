@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from.models import Player, PlayerStats
+from .models.player import Player
+from .models.stats import PlayerStats
 
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ('id', 'country', 'nickname', 'game_player_id')
