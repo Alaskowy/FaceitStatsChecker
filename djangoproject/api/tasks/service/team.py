@@ -6,6 +6,7 @@ import requests
 import os
 token = os.getenv("TOKEN")
 
+
 class TeamService:
     @staticmethod
     def create_teams(players: dict[str, list[str]]) -> tuple[list[str], list[str]]:
@@ -43,7 +44,7 @@ class TeamService:
         return list_of_players
 
     @staticmethod
-    def create_team_based_on_match_data(data: str, match_id) -> tuple['Team', ...]:
+    def create_team_based_on_match_data(data: dict[Any], match_id) -> tuple['Team', ...]:
         """
          Returning Team objects based on data.
         """

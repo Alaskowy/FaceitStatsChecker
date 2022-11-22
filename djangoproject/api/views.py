@@ -5,7 +5,6 @@ from players.models import Player
 from matches.models import Match
 from matches.team_model import Team
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
 import os
 import requests
 from django.views import View
@@ -31,7 +30,7 @@ class PlayersGamesHistory(View):
         nickname = "Alask"
         game = "csgo"
         try:
-            player = Player.objects.get(nickname=nickname)
+            Player.objects.get(nickname=nickname)
         except ObjectDoesNotExist:
             return HttpResponse(status=404)
         request = requests.get(f"https://open.faceit.com/data/v4/players/808291d9-7d38-4a56-b26e-70581040db41/history",

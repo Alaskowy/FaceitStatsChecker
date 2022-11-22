@@ -2,11 +2,25 @@ import requests
 import os
 from players.models import Player, PlayerStats
 from matches.models import Match
-
+from typing import Union
 token = os.getenv("TOKEN")
 
 
 class PlayerService:
+
+    @staticmethod
+    def update_player_matches(players_to_update: Union[str, list[str]], match: 'Match') -> None:
+        if isinstance(players_to_update, str):
+            player_to_update = Player.objects.get(game_player_id=players_to_update)
+            player_to_update.matches.add(match)
+            player_to_update.save()
+        else:
+            for player_id in players_to_update:
+                player_to_update = Player.objects.get(game_player_id=player_id)
+                player_to_update.matches.add(match)
+                player_to_update.save()
+
+
     @staticmethod
     def get_player_info_based_on_player_id(player_id: str) -> dict:
         """
@@ -56,13 +70,15 @@ class PlayerService:
 
 
     @staticmethod
-    def create_player_stats(data: dict, match: 'Match') -> None:
+    def create_player_stats(match_info: dict, match: 'Match') -> None:
         """
         Creating player stats object based on given data from API.
         """
-        players = PlayerService.get_teams_players(data)
+        players = PlayerService.get_teams_players(match_info)
         for player in players:
-            stats=PlayerService.create_single_player_stats(player_id=player['player_id'], player_stats=player['player_stats'],match=match)
+            stats = PlayerService.create_single_player_stats(player_id=player['player_id'],
+                                                             player_stats=player['player_stats'],
+                                                             match=match)
             #Player.objects.filter(player_id__in=[player['player_id'] for player in players])
             obj = Player.objects.get(game_player_id=player['player_id'])
             obj.stats.add(stats)

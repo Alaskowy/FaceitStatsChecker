@@ -7,7 +7,7 @@ token = os.getenv("TOKEN")
 
 class MatchService:
     @staticmethod
-    def get_match_info_based_on_match_id(match_id: str) -> str:
+    def get_match_info_based_on_match_id(match_id: str) -> dict:
         """
         Returning match information.
         """
@@ -27,10 +27,18 @@ class MatchService:
         score = data['rounds'][0]['round_stats']['Score']
         rounds = data['rounds'][0]['round_stats']['Rounds']
         region = data['rounds'][0]['round_stats']['Region']
-        if not Match.objects.filter(match_id=match_id).exists():
-            match_pk = match_id
-            instance = Match.objects.create(match_id=match_id, map=map_played, winner=winner, score=score,
-                                            rounds=rounds, region=region)
-            team1, team2 = TeamService.create_team_based_on_match_data(data, match_id=match_pk)
-            instance.teams.add(team1, team2)
-            return instance
+        instance = Match.objects.create(match_id=match_id, map=map_played, winner=winner, score=score,
+                                        rounds=rounds, region=region, epoch=epoch)
+        team1, team2 = TeamService.create_team_based_on_match_data(data, match_id=match_id)
+        instance.teams.add(team1, team2)
+        return instance
+
+    @staticmethod
+    def get_epoch_time_for_match(match_id: str) -> datetime:
+        """
+        Getting epoch time for match based on match_id and return datetime object.
+        """
+        request = requests.get(f"https://open.faceit.com/data/v4/matches/{match_id}",
+                               headers={"Authorization": f"Bearer {token}"})
+        if request.status_code == 200:
+            return datetime.fromtimestamp(request.json()['finished_at'], timezone.utc)
