@@ -17,4 +17,4 @@ class PlayerStats(models.Model):
     player_id = models.CharField(max_length=100, help_text="Player's FaceIT ID",)
 
     def __str__(self):
-        return str(self.match)
+        return str(self.player_id)

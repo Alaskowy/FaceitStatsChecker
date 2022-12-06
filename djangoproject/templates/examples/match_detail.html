@@ -194,17 +194,78 @@
                     <h2 class="card-title">Performance</h2>
                   </div>
 
-                              <!-- Change dashboard to next page -->
-                  <div class="col-sm-6">
 
-                  </div>
-               <!-- Change dashboard to next page -->
                 </div>
+                <table class="table">
+                  <thead>
+                    <tr>Team 1  {{match_stats.score}}
+                      <th>Nickname</th>
+                      <th>Kills</th>
+                      <th>Deaths</th>
+                      <th>Assists</th>
+                      <th>K/D Ratio</th>
+                      <th>HS %</th>
+                      <th>HS Count</th>
+                      <th>K/R Ratio</th>
+                      <th>MVPs</th>
+                      <th>Triple Kills</th>
+                      <th>Quadra Kills</th>
+                      <th>Aces</th>
+                    </tr>
+                  </thead>
+                  {% for key, value in t1 %}
+                  <tbody>
+                    <th>{{value}}</th>
+                    <th>{{key.kills}}</th>
+                    <th>{{key.deaths}}</th>
+                    <th>{{key.assists}}</th>
+                    <th>{{key.kdratio}}</th>
+                    <th>{{key.hspercentage}}</th>
+                    <th>{{key.hscount}}</th>
+                    <th>{{key.krratio}}</th>
+                    <th>{{key.mvps}}</th>
+                    <th>{{key.triples}}</th>
+                    <th>{{key.quadras}}</th>
+                    <th>{{key.aces}}</th>
+                  </tbody>
+                  {% endfor %}
+                  <thead>
+                    <tr>Team 2
+                      <th>Nickname</th>
+                      <th>Kills</th>
+                      <th>Deaths</th>
+                      <th>Assists</th>
+                      <th>K/D Ratio</th>
+                      <th>HS %</th>
+                      <th>HS Count</th>
+                      <th>K/R Ratio</th>
+                      <th>MVPs</th>
+                      <th>Triple Kills</th>
+                      <th>Quadra Kills</th>
+                      <th>Aces</th>
+                    </tr>
+                  </thead>
+                  {% for key, value in t2 %}
+                  <tbody>
+                    <th>{{value}}</th>
+                    <th>{{key.kills}}</th>
+                    <th>{{key.deaths}}</th>
+                    <th>{{key.assists}}</th>
+                    <th>{{key.kdratio}}</th>
+                    <th>{{key.hspercentage}}</th>
+                    <th>{{key.hscount}}</th>
+                    <th>{{key.krratio}}</th>
+                    <th>{{key.mvps}}</th>
+                    <th>{{key.triples}}</th>
+                    <th>{{key.quadras}}</th>
+                    <th>{{key.aces}}</th>
+                  </tbody>
+                  {% endfor %}
+                </table>
               </div>
 <!-- GRAPH first DIV -->
               <div class="card-body">
                 <div class="chart-area">
-                    {{ graph|safe }}
                 </div>
               </div>
 <!-- GRAPH first DIV -->
@@ -214,32 +275,10 @@
         <div class="row">
           <!-- last matches -->
    <table class="table">
-    <thead>
-            <tr>
-            <th class="text-center">Map</th>
-            <th>Score</th>
-            <th>Region</th>
-            <th class="text-left">Date</th>
-            </tr>
-    </thead>
     <tbody>
-      {% for i in last_matches %}
-        <tr style='cursor: pointer; cursor: hand;' onclick="window.location='matches/{{ i.match_id }}'">
-            <th class="text-center">{{ i.map }}</th>
-            <th>{{i.score}}</th>
-            <th>{{i.region}}</th>
-            <th>{{i.epoch}}</th>
-        </tr>
-      {% endfor %}
     </tbody>
 </table>
-        </div>
-      <div>
-        <center>
-        <button class="button">LOAD MORE MATCHES</button>
-          </center>
-        </div>
-        <footer class="footer">
+      <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">
             <li class="nav-item">

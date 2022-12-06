@@ -22,9 +22,13 @@ def register(request):
             if not user_data:
                 messages.error(request, f"Faceit Account with {nickname} does not exist" )
                 return render(request, 'users/register.html', {'form': form})
-            form.save()
+            if not Player.objects.filter(nickname=nickname).exists():
+                form.save()
+            else:
+                messages.error(request, f"Faceit Account with {nickname} does exist")
+                return render(request, 'users/register.html', {'form': form})
             messages.success(request, f"Account created - {nickname}")
-            return redirect('players')
+            return redirect('dashboard')
     else:
         form = AccountForm()
     messages.error(request, form.errors)
