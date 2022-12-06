@@ -53,7 +53,7 @@
           <li class="active ">
             <a href="./dashboard.html">
               <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Dashboard</p>
+              <p>Dashboard/ {{ user.email }}</p>
             </a>
           </li>
           <li>
@@ -249,7 +249,7 @@
     </thead>
     <tbody>
       {% for i in last_matches %}
-        <tr style='cursor: pointer; cursor: hand;' onclick="window.location='matches/8';">
+        <tr style='cursor: pointer; cursor: hand;' onclick="window.location='matches/{{ i.match_id }}'">
             <th class="text-center">{{ i.map }}</th>
             <th>{{i.score}}</th>
             <th>{{i.region}}</th>

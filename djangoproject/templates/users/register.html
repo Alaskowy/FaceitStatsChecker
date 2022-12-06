@@ -1,21 +1,49 @@
+{% load static %}
+{% load widget_tweaks %}
 {% block content %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend>Join!</legend>
-                {{ form.as_p }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign up</button>
-            </div>
-        </form>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+<head>
+    <link href="{% static 'assets/css/black-dashboard.css' %}" rel="stylesheet" />
+</head>
+<body>
+
+<div class="d-flex justify-content-center align-items-center container text-center h-100">
+    <div class="col col-sm-6 col-md-6 col-lg-5 col-xl-7">
+<div class="card">
+  <div class="card-body">
+            <div class="d-flex justify-content-center links">
+          <h2>Sign Up</h2>
+        </div>
+
+      {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <form method ="POST" class="form">
+        {% csrf_token %}
+                <div class="form-group">
+            {% render_field form.nickname class+="form-control" placeholder="Enter Faceit Nickname" %}
+      </div>
+      <div class="form-group">
+          {% render_field form.email class+="form-control" placeholder="Enter E-mail" %}
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+           {% render_field form.password1 class+="form-control" placeholder="Password" %}
+      </div>
+      <div class="form-group">
+           {% render_field form.password2 class+="form-control" placeholder="reneterPassword" %}
+      </div>
+          <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        <div class="d-flex justify-content-center links">
+						Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
+					</div>
+    </form>
     </div>
+ </div>
+    </div>
+</div>
+</body>
 {% endblock %}
