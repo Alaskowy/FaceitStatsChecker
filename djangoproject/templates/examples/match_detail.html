@@ -191,14 +191,15 @@
               <div class="card-header ">
                 <div class="row">
                   <div class="col-sm-6 text-left">
-                    <h2 class="card-title">Performance</h2>
                   </div>
 
 
                 </div>
                 <table class="table">
-                  <thead>
-                    <tr>Team 1  {{match_stats.score}}
+                  <h2 class="card-title"><center>Performance </center></h2>
+                   <center> <h4>Team 1  {{match_stats}} Team 2 </h4></center>
+                  <thead style="background-color: #28a745; opacity: 50%;">
+                  <tr style="color: green">
                       <th>Nickname</th>
                       <th>Kills</th>
                       <th>Deaths</th>
@@ -214,23 +215,23 @@
                     </tr>
                   </thead>
                   {% for key, value in t1 %}
-                  <tbody>
-                    <th>{{value}}</th>
-                    <th>{{key.kills}}</th>
-                    <th>{{key.deaths}}</th>
-                    <th>{{key.assists}}</th>
-                    <th>{{key.kdratio}}</th>
-                    <th>{{key.hspercentage}}</th>
-                    <th>{{key.hscount}}</th>
-                    <th>{{key.krratio}}</th>
-                    <th>{{key.mvps}}</th>
-                    <th>{{key.triples}}</th>
-                    <th>{{key.quadras}}</th>
-                    <th>{{key.aces}}</th>
+                  <tbody style="color: white;">
+                    <td>{{value}}</td>
+                    <td>{{key.kills}}</td>
+                    <td>{{key.deaths}}</td>
+                    <td>{{key.assists}}</td>
+                    <td>{{key.kdratio}}</td>
+                    <td>{{key.hspercentage}}</td>
+                    <td>{{key.hscount}}</td>
+                    <td>{{key.krratio}}</td>
+                    <td>{{key.mvps}}</td>
+                    <td>{{key.triples}}</td>
+                    <td>{{key.quadras}}</td>
+                    <td>{{key.aces}}</td>
                   </tbody>
                   {% endfor %}
-                  <thead>
-                    <tr>Team 2
+                  <thead style="width: 100%; color: white; background-color: #dc3545; opacity: 50%">
+                    <tr>
                       <th>Nickname</th>
                       <th>Kills</th>
                       <th>Deaths</th>
@@ -246,19 +247,19 @@
                     </tr>
                   </thead>
                   {% for key, value in t2 %}
-                  <tbody>
-                    <th>{{value}}</th>
-                    <th>{{key.kills}}</th>
-                    <th>{{key.deaths}}</th>
-                    <th>{{key.assists}}</th>
-                    <th>{{key.kdratio}}</th>
-                    <th>{{key.hspercentage}}</th>
-                    <th>{{key.hscount}}</th>
-                    <th>{{key.krratio}}</th>
-                    <th>{{key.mvps}}</th>
-                    <th>{{key.triples}}</th>
-                    <th>{{key.quadras}}</th>
-                    <th>{{key.aces}}</th>
+                  <tbody style="color: white;">
+                    <td>{{value}}</td>
+                    <td>{{key.kills}}</td>
+                    <td>{{key.deaths}}</td>
+                    <td>{{key.assists}}</td>
+                    <td>{{key.kdratio}}</td>
+                    <td>{{key.hspercentage}}</td>
+                    <td>{{key.hscount}}</td>
+                    <td>{{key.krratio}}</td>
+                    <td>{{key.mvps}}</td>
+                    <td>{{key.triples}}</td>
+                    <td>{{key.quadras}}</td>
+                    <td>{{key.aces}}</td>
                   </tbody>
                   {% endfor %}
                 </table>

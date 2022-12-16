@@ -14,16 +14,20 @@ def get_last_matches(player_id):
     return player
 
 
-def get_players_stats_in_match(team1, team2, match_id):
-    match_pk = Match.objects.get(match_id=match_id).id
+def get_players_stats_in_match(team1, team2, match_id) -> dict[str, Team]:
+    match = Match.objects.get(match_id=match_id)
+    match_pk = match.pk
+    match_winner = match.winner
+
     team_1 = Team.objects.get(team_id=team1, matches=match_pk).players.all().values()
     team_2 = Team.objects.get(team_id=team2, matches=match_pk).players.all().values()
     team_1_ids = [player['game_player_id'] for player in team_1]
     team_2_ids = [player['game_player_id'] for player in team_2]
     team_1_stats = PlayerStats.objects.filter(match=match_pk, player_id__in=team_1_ids)
     team_2_stats = PlayerStats.objects.filter(match=match_pk, player_id__in=team_2_ids)
-
-    return team_1_stats, team_2_stats
+    if not team1.team_id == match_winner:
+        return {'team_1': team_2_stats, 'team_2': team_1_stats}
+    return {'team_1': team_1_stats, 'team_2': team_2_stats}
 
 
 def get_players_nicknames_connected_to_stats(team1, team2):
@@ -66,10 +70,12 @@ class MatchDetailView(LoginRequiredMixin, TemplateView):
         context = super(MatchDetailView, self).get_context_data(**kwargs)
         match = Match.objects.get(match_id=match_id)
         player_stats = PlayerStats.objects.get(player_id=user.faceit_account.game_player_id, match_id=match.pk)
-        team1, team2 = get_players_stats_in_match(match.teams.first(), match.teams.last(), match_id)
-        t1, t2 = get_players_nicknames_connected_to_stats(team1, team2)
-        context['t1'] = t1
-        context['t2'] = t2
-        context['match_stats'] = match
+        teams = get_players_stats_in_match(match.teams.first(), match.teams.last(), match_id)
+        context['t1'], context['t2'] = get_players_nicknames_connected_to_stats(teams['team_1'], teams['team_2'])
+        score = match.score.split("/")
+        final_score = match.score
+        if int(score[0]) < int(score[1]):
+            final_score = f"{score[1]}/{score[0]}"
+        context['match_stats'] = final_score
         context['player_stats'] = player_stats
         return context
